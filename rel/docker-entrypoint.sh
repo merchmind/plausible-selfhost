@@ -3,7 +3,11 @@ set -e
 
 if [ "$1" = 'run' ]; then
       echo "🚀 Running database migrations..."
-      /app/bin/plausible eval "Plausible.Repo.__adapter__.storage_up(Plausible.Repo.config); Ecto.Migrator.run(Plausible.Repo, 'priv/repo/migrations', :up, all: true)"
+      /app/bin/plausible eval \
+  "Application.ensure_all_started(:plausible); \
+   Ecto.Migrator.run(Plausible.Repo, \
+     Application.app_dir(:plausible, \"priv/repo/migrations\"), \
+     :up, all: true)"
       echo "✅ Starting Plausible..."
       exec /app/bin/plausible start
 

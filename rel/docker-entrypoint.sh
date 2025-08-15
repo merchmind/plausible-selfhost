@@ -3,7 +3,7 @@ set -e
 
 if [ "$1" = 'run' ]; then
       echo "🚀 Running database migrations..."
-      /app/bin/plausible eval "Plausible.Release.migrate"
+      /app/bin/plausible migrate
       echo "✅ Starting Plausible..."
       exec /app/bin/plausible start
 
